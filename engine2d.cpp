@@ -1,4 +1,5 @@
 #include "engine2d.h"
+#include "debug.h"
 
 #include <SDL/SDL_image.h>
 #include <ctime>
@@ -12,7 +13,7 @@ namespace gs
 GsEngine2D::GsEngine2D(int argc, char** argv)
 {
     if (!init())
-        exit(1);
+        gsBug("init failed");
 }
 
 GsEngine2D::~GsEngine2D(void)
@@ -91,7 +92,7 @@ void GsEngine2D::update(void)
 void GsEngine2D::render(void)
 {
     if (SDL_Flip(screen) == -1)
-        exit(1);
+        gsBug("SDL_Flip failed");
 }
 
 void GsEngine2D::delay(void)
