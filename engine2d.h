@@ -1,15 +1,15 @@
-#ifndef _ENGINE2D_H_
-#define _ENGINE2D_H_
+#ifndef GS_ENGINE2D_H
+#define GS_ENGINE2D_H
 
 #include <SDL/SDL.h>
 
 namespace gs
 {
 
-class Engine2D {
+class GsEngine2D {
 public:
-    Engine2D(int argc, char** argv);
-    virtual ~Engine2D(void);
+    GsEngine2D(int argc, char** argv);
+    virtual ~GsEngine2D(void);
     virtual void start(void);
 protected:
     int screenWidth;
@@ -32,4 +32,4 @@ protected:
 
 } // namespace gs
 
-#endif // _ENGINE2D_H_
+#endif // GS_ENGINE2D_H

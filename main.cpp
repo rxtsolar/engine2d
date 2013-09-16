@@ -5,7 +5,7 @@ using namespace gs;
 
 int main(int argc, char* argv[])
 {
-    Engine2D* engine = new Engine2D(argc, argv);
+    GsEngine2D* engine = new GsEngine2D(argc, argv);
     engine->start();
     delete engine;
 

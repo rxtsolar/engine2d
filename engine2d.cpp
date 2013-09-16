@@ -9,20 +9,20 @@ using namespace std;
 namespace gs
 {
 
-Engine2D::Engine2D(int argc, char** argv)
+GsEngine2D::GsEngine2D(int argc, char** argv)
 {
     if (!init())
         exit(1);
 }
 
-Engine2D::~Engine2D(void)
+GsEngine2D::~GsEngine2D(void)
 {
     SDL_FreeSurface(screen);
     SDL_FreeSurface(image);
     SDL_Quit();
 }
 
-void Engine2D::start(void)
+void GsEngine2D::start(void)
 {
     running = true;
     while (running) {
@@ -52,7 +52,7 @@ void applySurface(int x, int y, SDL_Surface* src, SDL_Surface* dst)
     SDL_BlitSurface(src, 0, dst, &offset);
 }
 
-bool Engine2D::init(void)
+bool GsEngine2D::init(void)
 {
     srand(time(0));
     screenWidth = 1280;
@@ -74,27 +74,27 @@ bool Engine2D::init(void)
     return true;
 }
 
-void Engine2D::handle(void)
+void GsEngine2D::handle(void)
 {
     while (SDL_PollEvent(&event))
         if (event.type == SDL_QUIT)
             running = false;
 }
 
-void Engine2D::update(void)
+void GsEngine2D::update(void)
 {
     int x = rand() % 200;
     int y = rand() % 200;
     applySurface(x, y, image, screen);
 }
 
-void Engine2D::render(void)
+void GsEngine2D::render(void)
 {
     if (SDL_Flip(screen) == -1)
         exit(1);
 }
 
-void Engine2D::delay(void)
+void GsEngine2D::delay(void)
 {
     SDL_Delay(1000 / fps * 30);
 }
