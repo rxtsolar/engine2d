@@ -8,7 +8,7 @@ namespace gs
 
 inline void gsBug(const char* msg)
 {
-    std::cerr << msg << std::endl;
+    std::cerr << "Error: " << msg << std::endl;
     exit(1);
 }
 

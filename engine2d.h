@@ -2,6 +2,7 @@
 #define GS_ENGINE2D_H
 
 #include <SDL/SDL.h>
+#include "image.h"
 
 namespace gs
 {
@@ -14,14 +15,13 @@ public:
 protected:
     int screenWidth;
     int screenHeight;
-    int screenBPP;
     int fps;
 
     bool running;
     SDL_Event event;
 
-    SDL_Surface* screen;
-    SDL_Surface* image;
+    GsImage* screen;
+    GsImage image;
 
     virtual bool init(void);
     virtual void handle(void);

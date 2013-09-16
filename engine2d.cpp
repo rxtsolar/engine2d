@@ -1,9 +1,9 @@
 #include "engine2d.h"
 #include "debug.h"
 
-#include <SDL/SDL_image.h>
 #include <ctime>
 #include <iostream>
+#include <SDL/SDL_image.h>
 
 using namespace std;
 
@@ -18,8 +18,7 @@ GsEngine2D::GsEngine2D(int argc, char** argv)
 
 GsEngine2D::~GsEngine2D(void)
 {
-    SDL_FreeSurface(screen);
-    SDL_FreeSurface(image);
+    delete screen;
     SDL_Quit();
 }
 
@@ -34,42 +33,17 @@ void GsEngine2D::start(void)
     }
 }
 
-SDL_Surface* loadImage(const char* name)
-{
-    SDL_Surface* optimizedImage = 0;
-    SDL_Surface* loadedImage = IMG_Load(name);
-    if (!loadedImage)
-        return 0;
-    optimizedImage = SDL_DisplayFormat(loadedImage);
-    SDL_FreeSurface(loadedImage);
-    return optimizedImage;
-}
-
-void applySurface(int x, int y, SDL_Surface* src, SDL_Surface* dst)
-{
-    SDL_Rect offset;
-    offset.x = x;
-    offset.y = y;
-    SDL_BlitSurface(src, 0, dst, &offset);
-}
-
 bool GsEngine2D::init(void)
 {
     srand(time(0));
     screenWidth = 1280;
     screenHeight = 720;
-    screenBPP = 32;
     fps = 30;
     running = false;
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
         return false;
-    screen = SDL_SetVideoMode(screenWidth, screenHeight,
-                              screenBPP, SDL_SWSURFACE);
-    if (!screen)
-        return false;
-    image = loadImage("preview2.jpg");
-    if (!image)
-        return false;
+    screen = new GsImage(screenWidth, screenHeight);
+    image = GsImage("preview2.jpg");
     SDL_WM_SetCaption("My Game", 0); 
     SDL_ShowCursor(0);
     return true;
@@ -86,12 +60,12 @@ void GsEngine2D::update(void)
 {
     int x = rand() % 200;
     int y = rand() % 200;
-    applySurface(x, y, image, screen);
+    screen->applySurface(x, y, image);
 }
 
 void GsEngine2D::render(void)
 {
-    if (SDL_Flip(screen) == -1)
+    if (SDL_Flip(screen->getSurface()) == -1)
         gsBug("SDL_Flip failed");
 }
 
@@ -99,4 +73,5 @@ void GsEngine2D::delay(void)
 {
     SDL_Delay(1000 / fps * 30);
 }
+
 } // namespace gs
