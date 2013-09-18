@@ -29,8 +29,7 @@ GsImage::GsImage(const GsImage& image)
     if (!origin) {
         surface = 0;
     } else {
-        //surface = SDL_DisplayFormatAlpha(origin);
-        surface = SDL_DisplayFormat(origin);
+        surface = SDL_DisplayFormatAlpha(origin);
         if (!surface)
             gsBug("SDL_DispplayFormatAlpha");
     }
@@ -48,8 +47,7 @@ GsImage& GsImage::operator=(const GsImage& image)
     if (!origin) {
         surface = 0;
     } else {
-        //surface = SDL_DisplayFormatAlpha(origin);
-        surface = SDL_DisplayFormat(origin);
+        surface = SDL_DisplayFormatAlpha(origin);
         if (!surface)
             gsBug("SDL_DispplayFormatAlpha");
     }
@@ -62,8 +60,7 @@ void GsImage::loadImage(const char* path)
     if (!raw)
         gsBug("IMG_Load");
     destroyImage();
-    //surface = SDL_DisplayFormatAlpha(raw);
-    surface = SDL_DisplayFormat(raw);
+    surface = SDL_DisplayFormatAlpha(raw);
     SDL_FreeSurface(raw);
     if (!surface)
         gsBug("SDL_DispplayFormatAlpha");
