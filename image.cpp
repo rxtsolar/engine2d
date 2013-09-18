@@ -8,17 +8,20 @@ namespace gs
 GsImage::GsImage(void)
 {
     surface = 0;
+    colorKey = 0;
 }
 
 GsImage::GsImage(const char* path)
 {
     surface = 0;
+    colorKey = 0;
     loadImage(path);
 }
 
 GsImage::GsImage(int width, int height)
 {
     surface = SDL_SetVideoMode(width, height, DEFAULT_BPP, SDL_SWSURFACE);
+    colorKey = 0;
     if (!surface)
         gsBug("SDL_SetVideoMode");
 }
@@ -26,6 +29,7 @@ GsImage::GsImage(int width, int height)
 GsImage::GsImage(const GsImage& image)
 {
     SDL_Surface* origin = image.getSurface();
+    colorKey = image.getColorKey();
     if (!origin) {
         surface = 0;
     } else {
@@ -44,6 +48,7 @@ GsImage& GsImage::operator=(const GsImage& image)
 {
     destroyImage();
     SDL_Surface* origin = image.getSurface();
+    colorKey = image.getColorKey();
     if (!origin) {
         surface = 0;
     } else {
@@ -84,6 +89,32 @@ void GsImage::applySurface(int x, int y, const GsImage& image)
     offset.x = x;
     offset.y = y;
     SDL_BlitSurface(image.getSurface(), 0, surface, &offset);
+}
+
+void GsImage::setColorKey(Uint32 ck)
+{
+    colorKey = ck;
+}
+
+void GsImage::setColorKey(Uint8 r, Uint8 g, Uint8 b)
+{
+    if (surface)
+        colorKey = SDL_MapRGB(surface->format, r, g, b);
+}
+
+Uint32 GsImage::getColorKey(void) const
+{
+    return colorKey;
+}
+
+void GsImage::enableColorKey(void)
+{
+    SDL_SetColorKey(surface, SDL_SRCCOLORKEY, colorKey);
+}
+
+void GsImage::disableColorKey(void)
+{
+    SDL_SetColorKey(surface, 0, colorKey);
 }
 
 } // namespace gs

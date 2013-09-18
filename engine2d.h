@@ -2,6 +2,7 @@
 #define GS_ENGINE2D_H
 
 #include <SDL/SDL.h>
+#include <vector>
 #include "image.h"
 
 namespace gs
@@ -21,7 +22,7 @@ protected:
     SDL_Event event;
 
     GsImage* screen;
-    GsImage image;
+    std::vector<GsImage> images;
 
     virtual bool init(void);
     virtual void handle(void);

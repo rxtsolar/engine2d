@@ -20,8 +20,14 @@ public:
     virtual void destroyImage(void);
     virtual SDL_Surface* getSurface(void) const;
     virtual void applySurface(int x, int y, const GsImage& image);
+    virtual void setColorKey(Uint32 ck);
+    virtual void setColorKey(Uint8 r, Uint8 g, Uint8 b);
+    virtual Uint32 getColorKey(void) const;
+    virtual void enableColorKey(void);
+    virtual void disableColorKey(void);
 protected:
     SDL_Surface* surface;
+    Uint32 colorKey;
 };
 
 } // namespace gs;
