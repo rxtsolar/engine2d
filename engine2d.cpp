@@ -3,7 +3,6 @@
 
 #include <ctime>
 #include <iostream>
-#include <SDL/SDL_image.h>
 
 using namespace std;
 
@@ -47,7 +46,7 @@ bool GsEngine2D::init(void)
     image = GsImage("background.jpg");
     images.push_back(image);
     image = GsImage("foo.jpg");
-    image.setColorKey(0, 0xff, 0xff);
+    image.setColorKey(GsColor(0, 0xff, 0xff));
     image.enableColorKey();
     images.push_back(image);
     SDL_WM_SetCaption("My Game", 0); 
@@ -72,7 +71,7 @@ void GsEngine2D::update(void)
 
 void GsEngine2D::render(void)
 {
-    if (SDL_Flip(screen->getSurface()) == -1)
+    if (SDL_Flip(screen->__getSurface()) == -1)
         gsBug("SDL_Flip failed");
 }
 
