@@ -42,13 +42,24 @@ bool GsEngine2D::init(void)
     running = false;
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
         return false;
+
     screen = new GsImage(screenWidth, screenHeight);
+    screen->setRoi(screenWidth/4, screenHeight/4,
+                   screenWidth/2, screenHeight/2);
+
     image = GsImage("background.jpg");
     images.push_back(image);
+
     image = GsImage("foo.jpg");
     image.setColorKey(GsColor(0, 0xff, 0xff));
     image.enableColorKey();
     images.push_back(image);
+
+    image = GsImage("sheet.jpg");
+    image.setColorKey(GsColor(0, 0xff, 0xff));
+    image.enableColorKey();
+    images.push_back(image);
+
     SDL_WM_SetCaption("My Game", 0); 
     SDL_ShowCursor(0);
     return true;
@@ -65,8 +76,21 @@ void GsEngine2D::update(void)
 {
     int x = rand() % 200;
     int y = rand() % 200;
+    int w = images[2].getWidth();
+    int h = images[2].getHeight();
+
+    screen->fillRoiWith(0xff, 0xff, 0xff);
     screen->applySurface(0, 0, images[0]);
     screen->applySurface(x, y, images[1]);
+
+    images[2].setRoi(0, 0, w/2, h/2);
+    screen->applySurface(0, 0, images[2]);
+    images[2].setRoi(w/2, 0, w/2, h/2);
+    screen->applySurface(screenWidth/2, 0, images[2]);
+    images[2].setRoi(w/2, h/2, w/2, h/2);
+    screen->applySurface(screenWidth/2, screenHeight/2, images[2]);
+    images[2].setRoi(0, h/2, w/2, h/2);
+    screen->applySurface(0, screenHeight/2, images[2]);
 }
 
 void GsEngine2D::render(void)
