@@ -4,6 +4,7 @@
 #include <SDL/SDL.h>
 #include <vector>
 #include "image.h"
+#include "object.h"
 
 namespace gs
 {
@@ -22,7 +23,7 @@ protected:
     SDL_Event event;
 
     GsImage* screen;
-    std::vector<GsImage> images;
+    std::vector<GsObject> objects;
 
     virtual bool init(void);
     virtual void handle(void);

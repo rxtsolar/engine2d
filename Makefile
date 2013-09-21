@@ -2,8 +2,8 @@ CC = g++
 CFLAGS = -g -Wall
 LIBS = -lSDL -lSDL_image
 
-headers = engine2d.h image.h color.h shape.h debug.h
-objects = engine2d.o image.o color.o shape.o main.o
+headers = engine2d.h image.h color.h shape.h object.h debug.h
+objects = engine2d.o image.o color.o shape.o object.o main.o
 
 %.o : %.cpp
 	$(CC) $(CFLAGS) -c $<
