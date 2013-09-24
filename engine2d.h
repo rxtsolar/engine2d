@@ -4,6 +4,7 @@
 #include <SDL/SDL.h>
 #include <vector>
 #include "image.h"
+#include "sound.h"
 #include "object.h"
 
 namespace gs
@@ -24,6 +25,8 @@ protected:
 
     GsImage* screen;
     std::vector<GsObject> objects;
+    GsSound sound;
+    GsMusic music;
 
     virtual bool init(void);
     virtual void handle(void);

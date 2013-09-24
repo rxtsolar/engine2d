@@ -18,6 +18,7 @@ GsEngine2D::GsEngine2D(int argc, char** argv)
 GsEngine2D::~GsEngine2D(void)
 {
     delete screen;
+    Mix_CloseAudio();
     SDL_Quit();
 }
 
@@ -42,6 +43,8 @@ bool GsEngine2D::init(void)
     running = false;
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
         return false;
+    if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+        return false;
 
     screen = new GsImage(screenWidth, screenHeight);
     screen->setRoi(screenWidth/4, screenHeight/4,
@@ -60,6 +63,10 @@ bool GsEngine2D::init(void)
     image.enableColorKey();
     objects.push_back(GsObject(image));
 
+    sound.loadSound("jump.wav");
+
+    music.loadMusic("tristram.mp3");
+
     SDL_WM_SetCaption("My Game", 0); 
     SDL_ShowCursor(0);
     return true;
@@ -67,9 +74,18 @@ bool GsEngine2D::init(void)
 
 void GsEngine2D::handle(void)
 {
-    while (SDL_PollEvent(&event))
+    while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT)
             running = false;
+        if (event.type == SDL_KEYDOWN) {
+            if (event.key.keysym.sym == SDLK_j)
+                sound.play();
+            if (event.key.keysym.sym == SDLK_m)
+                music.play();
+            if (event.key.keysym.sym == SDLK_p)
+                music.toggle();
+        }
+    }
 }
 
 void GsEngine2D::update(void)
