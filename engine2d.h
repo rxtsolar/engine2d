@@ -1,10 +1,10 @@
 #ifndef GS_ENGINE2D_H
 #define GS_ENGINE2D_H
 
-#include <SDL/SDL.h>
 #include <vector>
 #include "image.h"
 #include "sound.h"
+#include "timer.h"
 #include "object.h"
 
 namespace gs
@@ -23,6 +23,8 @@ protected:
     bool running;
     SDL_Event event;
 
+    GsTimer timer;
+    GsTimer fpsTimer;
     GsImage* screen;
     std::vector<GsObject> objects;
     GsSound sound;

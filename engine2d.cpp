@@ -17,6 +17,7 @@ GsEngine2D::GsEngine2D(int argc, char** argv)
 
 GsEngine2D::~GsEngine2D(void)
 {
+    timer.stop();
     delete screen;
     Mix_CloseAudio();
     SDL_Quit();
@@ -26,6 +27,7 @@ void GsEngine2D::start(void)
 {
     running = true;
     while (running) {
+        fpsTimer.start();
         handle();
         update();
         render();
@@ -69,6 +71,8 @@ bool GsEngine2D::init(void)
 
     SDL_WM_SetCaption("My Game", 0); 
     SDL_ShowCursor(0);
+
+    timer.start();
     return true;
 }
 
@@ -108,7 +112,8 @@ void GsEngine2D::render(void)
 
 void GsEngine2D::delay(void)
 {
-    SDL_Delay(1000 / fps * 30);
+    if (fpsTimer.getTicks() < 1000 / fps)
+        SDL_Delay(1000 / fps - fpsTimer.getTicks());
 }
 
 } // namespace gs
