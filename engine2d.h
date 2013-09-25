@@ -5,6 +5,7 @@
 #include "image.h"
 #include "sound.h"
 #include "timer.h"
+#include "vect2.h"
 #include "object.h"
 
 namespace gs
