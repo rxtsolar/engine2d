@@ -2,6 +2,7 @@
 #define GS_OBJECT_H
 
 #include "image.h"
+#include "vect2.h"
 
 namespace gs
 {
@@ -16,17 +17,17 @@ public:
     virtual GsObject& operator=(const GsObject& object);
 
     virtual void setPosition(int x, int y);
+    virtual void setPosition(const GsVect2i& pos);
     virtual int getX(void) const;
     virtual int getY(void) const;
+    virtual const GsVect2i& getPosition(void) const;
 
     virtual void setImage(const GsImage& image);
-    virtual GsImage& getImage(void);
     virtual const GsImage& getImage(void) const;
 
     virtual void displayOn(GsImage& image);
 protected:
-    int x;
-    int y;
+    GsVect2i position;
     GsImage image;
 };
 

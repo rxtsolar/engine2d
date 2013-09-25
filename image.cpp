@@ -80,7 +80,7 @@ void GsImage::destroyImage(void)
     setRoi(0, 0, 0, 0);
 }
 
-SDL_Surface* GsImage::__getSurface(void) const
+SDL_Surface* const GsImage::__getSurface(void) const
 {
     return surface;
 }
@@ -125,11 +125,6 @@ const GsColor& GsImage::getColorKey(void) const
     return colorKey;
 }
 
-GsColor& GsImage::getColorKey(void)
-{
-    return colorKey;
-}
-
 void GsImage::enableColorKey(void)
 {
     if (!surface)
@@ -149,11 +144,6 @@ void GsImage::disableColorKey(void)
 void GsImage::setRoi(int x, int y, int w, int h)
 {
     roi.setRect(x, y, w, h);
-}
-
-GsRect& GsImage::getRoi(void)
-{
-    return roi;
 }
 
 const GsRect& GsImage::getRoi(void) const

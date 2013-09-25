@@ -41,11 +41,6 @@ void GsSound::play(void)
         gsBug("Mix_PlayChannel");
 }
 
-Mix_Chunk* GsSound::__getSound(void) const
-{
-    return sound;
-}
-
 
 GsMusic::GsMusic(void)
 {
@@ -115,11 +110,6 @@ void GsMusic::toggle(void)
         Mix_ResumeMusic();
     else
         Mix_PauseMusic();
-}
-
-Mix_Music* GsMusic::__getMusic(void) const
-{
-    return music;
 }
 
 } // namespace gs

@@ -39,22 +39,22 @@ public:
         *this = vect;
     }
 
+    void setX(const T& x)
+    {
+        this->x = x;
+    }
+
+    void setY(const T& y)
+    {
+        this->y = y;
+    }
+
     const T& getX(void) const
     {
         return x;
     }
 
-    T& getX(void)
-    {
-        return x;
-    }
-
     const T& getY(void) const
-    {
-        return y;
-    }
-
-    T& getY(void)
     {
         return y;
     }

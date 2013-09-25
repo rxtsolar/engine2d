@@ -13,6 +13,11 @@ GsRect::GsRect(int x, int y, int w, int h)
     setRect(x, y, w, h);
 }
 
+GsRect::GsRect(const GsVect2i& p, const GsVect2i& s)
+{
+    setRect(p, s);
+}
+
 GsRect::GsRect(const GsRect& rect)
 {
     *this = rect;
@@ -25,59 +30,81 @@ GsRect::~GsRect(void)
 
 GsRect& GsRect::operator=(const GsRect& rect)
 {
-    x = rect.getX();
-    y = rect.getY();
-    w = rect.getW();
-    h = rect.getH();
+    point = GsVect2i(rect.getX(), rect.getY());
+    size = GsVect2i(rect.getW(), rect.getH());
     return *this;
 }
 
 void GsRect::setRect(int x, int y, int w, int h)
 {
-    this->x = x;
-    this->y = y;
-    this->w = w;
-    this->h = h;
+    point = GsVect2i(x, y);
+    size = GsVect2i(w, h);
+}
+
+void GsRect::setRect(const GsVect2i& p, const GsVect2i& s)
+{
+    point = p;
+    size = s;
+}
+
+void GsRect::setPoint(const GsVect2i& p)
+{
+    point = p;
+}
+
+void GsRect::setSize(const GsVect2i& s)
+{
+    size = s;
 }
 
 void GsRect::setX(int x)
 {
-    this->x = x;
+    point.setX(x);
 }
 
 void GsRect::setY(int y)
 {
-    this->y = y;
+    point.setY(y);
 }
 
 void GsRect::setW(int w)
 {
-    this->w = w;
+    size.setX(w);
 }
 
 void GsRect::setH(int h)
 {
-    this->h = h;
+    size.setY(h);
+}
+
+const GsVect2i& GsRect::getPoint(void) const
+{
+    return point;
+}
+
+const GsVect2i& GsRect::getSize(void) const
+{
+    return size;
 }
 
 int GsRect::getX(void) const
 {
-    return x;
+    return point.getX();
 }
 
 int GsRect::getY(void) const
 {
-    return y;
+    return point.getY();
 }
 
 int GsRect::getW(void) const
 {
-    return w;
+    return size.getX();
 }
 
 int GsRect::getH(void) const
 {
-    return h;
+    return size.getY();
 }
 
 } // namespace gs

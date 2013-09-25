@@ -15,8 +15,6 @@ public:
     virtual void loadSound(const char* path);
     virtual void destroySound(void);
     virtual void play(void);
-
-    virtual Mix_Chunk* __getSound(void) const;
 protected:
     Mix_Chunk* sound;
 };
@@ -34,8 +32,6 @@ public:
     virtual void pause(void);
     virtual void resume(void);
     virtual void toggle(void);
-
-    virtual Mix_Music* __getMusic(void) const;
 protected:
     Mix_Music* music;
 };

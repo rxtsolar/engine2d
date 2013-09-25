@@ -24,20 +24,18 @@ public:
 
     virtual void loadImage(const char* path);
     virtual void destroyImage(void);
-    virtual SDL_Surface* __getSurface(void) const;
+    virtual SDL_Surface* const __getSurface(void) const;
     virtual void applySurface(int x, int y, const GsImage& image);
 
     virtual int getWidth(void) const;
     virtual int getHeight(void) const;
 
     virtual void setColorKey(const GsColor& ck);
-    virtual GsColor& getColorKey(void);
     virtual const GsColor& getColorKey(void) const;
     virtual void enableColorKey(void);
     virtual void disableColorKey(void);
 
     virtual void setRoi(int x, int y, int w, int h);
-    virtual GsRect& getRoi(void);
     virtual const GsRect& getRoi(void) const;
 
     virtual void fillRoiWith(int r, int g, int b);
