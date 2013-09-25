@@ -132,6 +132,21 @@ public:
                fabs(y - vect.getY()) > GS_EPSILON;
     }
 
+    operator const GsVect2<int>(void) const
+    {
+        return GsVect2<int>(x, y);
+    }
+
+    operator const GsVect2<float>(void) const
+    {
+        return GsVect2<float>(x, y);
+    }
+
+    operator const GsVect2<double>(void) const
+    {
+        return GsVect2<double>(x, y);
+    }
+
     T dot(const GsVect2<T>& vect) const
     {
         return x * vect.getX() + y * vect.getY();

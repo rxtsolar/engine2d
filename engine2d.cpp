@@ -72,7 +72,7 @@ bool GsEngine2D::init(void)
 
     music.loadMusic("tristram.mp3");
 
-    SDL_WM_SetCaption("My Game", 0); 
+    SDL_WM_SetCaption("My Game", 0);
     SDL_ShowCursor(0);
 
     timer.start();

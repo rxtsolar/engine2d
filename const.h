@@ -3,6 +3,8 @@
 
 #include <cmath>
 #include <cfloat>
+#include <cstdlib>
+#include <SDL/SDL.h>
 
 namespace gs
 {

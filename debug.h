@@ -2,6 +2,7 @@
 #define GS_DEBUG_H
 
 #include <iostream>
+#include <cstdlib>
 
 namespace gs
 {
