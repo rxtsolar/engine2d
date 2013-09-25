@@ -34,7 +34,6 @@ protected:
     virtual void handle(void);
     virtual void update(void);
     virtual void render(void);
-    virtual void delay(void);
 };
 
 } // namespace gs

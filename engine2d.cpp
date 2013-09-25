@@ -28,10 +28,13 @@ void GsEngine2D::start(void)
     running = true;
     while (running) {
         fpsTimer.start();
+
         handle();
         update();
         render();
-        delay();
+
+        if (fpsTimer.getTicks() < 1000 / fps)
+            SDL_Delay(1000 / fps - fpsTimer.getTicks());
     }
 }
 
@@ -108,12 +111,6 @@ void GsEngine2D::render(void)
 {
     if (SDL_Flip(screen->__getSurface()) == -1)
         gsBug("SDL_Flip failed");
-}
-
-void GsEngine2D::delay(void)
-{
-    if (fpsTimer.getTicks() < 1000 / fps)
-        SDL_Delay(1000 / fps - fpsTimer.getTicks());
 }
 
 } // namespace gs
