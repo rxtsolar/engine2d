@@ -18,7 +18,7 @@ GsImage::GsImage(const char* path)
 
 GsImage::GsImage(int width, int height)
 {
-    surface = SDL_SetVideoMode(width, height, DEFAULT_BPP, SDL_SWSURFACE);
+    surface = SDL_SetVideoMode(width, height, GS_DEF_BPP, SDL_SWSURFACE);
     if (!surface)
         gsBug("SDL_SetVideoMode");
     setRoi(0, 0, surface->w, surface->h);

@@ -8,9 +8,9 @@
 namespace gs
 {
 
-const int DEFAULT_WIDTH = 1280;
-const int DEFAULT_HEIGHT = 720;
-const int DEFAULT_BPP = 32;
+const int GS_DEF_WIDTH = 1280;
+const int GS_DEF_HEIGHT = 720;
+const int GS_DEF_BPP = 32;
 
 class GsImage {
 public:
