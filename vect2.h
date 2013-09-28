@@ -187,15 +187,12 @@ public:
     }
 
     // theta is supposed to be degree
-    GsVect2<T> rotate(const GsVect2<T>& vect, double theta) const
+    GsVect2<T> rotate(double theta) const
     {
         theta *= GS_DEG_TO_RAD;
         double c = cos(theta);
         double s = sin(theta);
-        if (vect.norm2() < GS_EPSILON)
-            gsBug("rotate around 0 vector");
-        return GsVect2<T>(x * c - vect.getX() * s,
-                          x * s + vect.getY() * c);
+        return GsVect2<T>(x * c - y * s, x * s + y * c);
     }
 private:
     T x;
