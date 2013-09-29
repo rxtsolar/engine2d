@@ -31,6 +31,26 @@ protected:
     GsImage image;
 };
 
+class GsMovObject : public GsObject {
+public:
+    GsMovObject(void);
+    GsMovObject(const GsImage& image);// : GsObject(image);
+    GsMovObject(const GsMovObject& object);// : GsObject(object);
+    virtual ~GsMovObject(void);
+
+    virtual GsMovObject& operator=(const GsMovObject& object);
+
+    virtual void setVelocity(double vx, double vy);
+    virtual void setVelocity(const GsVect2d& velo);
+    virtual double getVx(void) const;
+    virtual double getVy(void) const;
+    virtual const GsVect2d& getVelocity(void) const;
+
+    virtual void update(void);
+protected:
+    GsVect2d velocity;
+};
+
 } // namespace gs
 
 #endif // GS_OBJECT_H
