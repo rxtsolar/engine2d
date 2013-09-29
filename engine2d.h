@@ -7,6 +7,7 @@
 #include "timer.h"
 #include "vect2.h"
 #include "object.h"
+#include "sprite.h"
 
 namespace gs
 {
@@ -28,6 +29,7 @@ protected:
     GsTimer fpsTimer;
     GsImage* screen;
     std::vector<GsMovObject*> objects;
+    std::vector<GsSprite> sprites;
     GsSound sound;
     GsMusic music;
 

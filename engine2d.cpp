@@ -41,6 +41,7 @@ void GsEngine2D::start(void)
 bool GsEngine2D::init(void)
 {
     GsImage image;
+    GsSprite sprite;
     srand(time(0));
     screenWidth = 1280;
     screenHeight = 720;
@@ -66,7 +67,9 @@ bool GsEngine2D::init(void)
     image = GsImage("sheet.jpg");
     image.setColorKey(GsColor(0, 0xff, 0xff));
     image.enableColorKey();
-    objects.push_back(new GsMovObject(image));
+    sprite.setImage(image);
+    sprite.setConfig(4, 2);
+    sprites.push_back(sprite);
 
     sound.loadSound("jump.wav");
 
@@ -120,6 +123,9 @@ void GsEngine2D::update(void)
     objects[1]->setVelocity(vx, vy);
     objects[1]->update();
     objects[1]->displayOn(*screen);
+
+    sprites[0].update();
+    sprites[0].applySurface(300, 300, *screen);
 }
 
 void GsEngine2D::render(void)
