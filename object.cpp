@@ -69,7 +69,7 @@ const GsSprite& GsObject::getSprite(void) const
 void GsObject::displayOn(GsImage& image)
 {
     sprite.update();
-    sprite.applySurface(position.getX(), position.getY(), image);
+    sprite.applySpriteOn(image, position.getX(), position.getY());
 }
 
 

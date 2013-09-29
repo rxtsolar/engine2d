@@ -140,7 +140,7 @@ void GsSprite::update(void)
     image.setRoi(GsRect(offsetX + offsetY, size));
 }
 
-void GsSprite::applySurface(int x, int y, GsImage& image)
+void GsSprite::applySpriteOn(GsImage& image, int x, int y)
 {
     image.applySurface(x, y, this->image);
 }

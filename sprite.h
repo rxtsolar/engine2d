@@ -38,7 +38,7 @@ public:
     virtual void disableColorKey(void);
 
     virtual void update(void);
-    virtual void applySurface(int x, int y, GsImage& image);
+    virtual void applySpriteOn(GsImage& image, int x, int y);
 protected:
     GsImage image;
     GsVect2i size;
