@@ -33,6 +33,7 @@ public:
 
     virtual void setRoi(int x, int y, int w, int h);
     virtual const GsRect& getRoi(void) const;
+    virtual void resetRoi(void);
 
     virtual void fillRoiWith(int r, int g, int b);
 protected:

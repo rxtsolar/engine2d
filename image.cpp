@@ -146,6 +146,14 @@ void GsImage::setRoi(int x, int y, int w, int h)
     roi.setRect(x, y, w, h);
 }
 
+void GsImage::resetRoi(void)
+{
+    if (surface)
+        setRoi(0, 0, surface->w, surface->h);
+    else
+        setRoi(0, 0, 0, 0);
+}
+
 const GsRect& GsImage::getRoi(void) const
 {
     return roi;
