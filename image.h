@@ -32,6 +32,7 @@ public:
     virtual void disableColorKey(void);
 
     virtual void setRoi(int x, int y, int w, int h);
+    virtual void setRoi(const GsRect& rect);
     virtual const GsRect& getRoi(void) const;
     virtual void resetRoi(void);
 
