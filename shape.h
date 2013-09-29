@@ -36,6 +36,10 @@ public:
     virtual int getH(void) const;
 
     virtual void movePoint(const GsVect2i& vect);
+
+    virtual bool contains(const GsVect2i& p) const;
+    virtual bool contains(const GsRect& r) const;
+    virtual bool conflictWith(const GsRect& r) const;
 protected:
     GsVect2i point;
     GsVect2i size;

@@ -123,4 +123,42 @@ void GsRect::movePoint(const GsVect2i& vect)
     point += vect;
 }
 
+bool GsRect::contains(const GsVect2i& p) const
+{
+    GsVect2i temp;
+    temp = p - point;
+    if (temp.getX() <= 0 || temp.getY() <= 0)
+        return false;
+    temp = point + size - p;
+    if (temp.getX() <= 0 || temp.getY() <= 0)
+        return false;
+    return true;
+}
+
+bool GsRect::contains(const GsRect& r) const
+{
+    if (!contains(r.getPoint()))
+        return false;
+    if (!contains(r.getPoint() + GsVect2i(r.getW(), 0)))
+        return false;
+    if (!contains(r.getPoint() + GsVect2i(0, r.getH())))
+        return false;
+    if (!contains(r.getPoint() + r.getSize()))
+        return false;
+    return true;
+}
+
+bool GsRect::conflictWith(const GsRect& r) const
+{
+    if (contains(r.getPoint()))
+        return true;
+    if (contains(r.getPoint() + GsVect2i(r.getW(), 0)))
+        return true;
+    if (contains(r.getPoint() + GsVect2i(0, r.getH())))
+        return true;
+    if (contains(r.getPoint() + r.getSize()))
+        return true;
+    return false;
+}
+
 } // namespace gs
