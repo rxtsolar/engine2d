@@ -56,17 +56,17 @@ bool GsEngine2D::init(void)
                    screenWidth/2, screenHeight/2);
 
     image = GsImage("background.jpg");
-    objects.push_back(GsObject(image));
+    objects.push_back(new GsMovObject(image));
 
     image = GsImage("foo.jpg");
     image.setColorKey(GsColor(0, 0xff, 0xff));
     image.enableColorKey();
-    objects.push_back(GsObject(image));
+    objects.push_back(new GsMovObject(image));
 
     image = GsImage("sheet.jpg");
     image.setColorKey(GsColor(0, 0xff, 0xff));
     image.enableColorKey();
-    objects.push_back(GsObject(image));
+    objects.push_back(new GsMovObject(image));
 
     sound.loadSound("jump.wav");
 
@@ -97,14 +97,29 @@ void GsEngine2D::handle(void)
 
 void GsEngine2D::update(void)
 {
-    int x = rand() % 200;
-    int y = rand() % 200;
+    Uint8* keyStates = SDL_GetKeyState(0);
+    double vx;
+    double vy;
 
     screen->fillRoiWith(0xff, 0xff, 0xff);
-    objects[0].setPosition(0, 0);
-    objects[0].displayOn(*screen);
-    objects[1].setPosition(x, y);
-    objects[1].displayOn(*screen);
+    objects[0]->setPosition(0, 0);
+    objects[0]->displayOn(*screen);
+
+    if (keyStates[SDLK_UP])
+        vy = -2;
+    else if (keyStates[SDLK_DOWN])
+        vy = 2;
+    else
+        vy = 0;
+    if (keyStates[SDLK_LEFT])
+        vx = -2;
+    else if (keyStates[SDLK_RIGHT])
+        vx = 2;
+    else
+        vx = 0;
+    objects[1]->setVelocity(vx, vy);
+    objects[1]->update();
+    objects[1]->displayOn(*screen);
 }
 
 void GsEngine2D::render(void)

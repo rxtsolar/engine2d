@@ -27,7 +27,7 @@ protected:
     GsTimer timer;
     GsTimer fpsTimer;
     GsImage* screen;
-    std::vector<GsObject> objects;
+    std::vector<GsMovObject*> objects;
     GsSound sound;
     GsMusic music;
 
