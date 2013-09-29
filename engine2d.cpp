@@ -57,19 +57,23 @@ bool GsEngine2D::init(void)
                    screenWidth/2, screenHeight/2);
 
     image = GsImage("background.jpg");
-    objects.push_back(new GsMovObject(image));
+    sprite.setImage(image);
+    objects.push_back(new GsMovObject(sprite));
 
     image = GsImage("foo.jpg");
     image.setColorKey(GsColor(0, 0xff, 0xff));
     image.enableColorKey();
-    objects.push_back(new GsMovObject(image));
+    sprite.setImage(image);
+    objects.push_back(new GsMovObject(sprite));
 
     image = GsImage("sheet.jpg");
     image.setColorKey(GsColor(0, 0xff, 0xff));
     image.enableColorKey();
     sprite.setImage(image);
     sprite.setConfig(4, 2);
-    sprites.push_back(sprite);
+    objects.push_back(new GsMovObject(sprite));
+
+    focus = 1;
 
     sound.loadSound("jump.wav");
 
@@ -94,6 +98,8 @@ void GsEngine2D::handle(void)
                 music.play();
             if (event.key.keysym.sym == SDLK_p)
                 music.toggle();
+            if (event.key.keysym.sym == SDLK_s)
+                focus = !(focus - 1) + 1;
         }
     }
 }
@@ -120,12 +126,10 @@ void GsEngine2D::update(void)
         vx = 2;
     else
         vx = 0;
-    objects[1]->setVelocity(vx, vy);
-    objects[1]->update();
+    objects[focus]->setVelocity(vx, vy);
+    objects[focus]->update();
     objects[1]->displayOn(*screen);
-
-    sprites[0].update();
-    sprites[0].applySurface(300, 300, *screen);
+    objects[2]->displayOn(*screen);
 }
 
 void GsEngine2D::render(void)

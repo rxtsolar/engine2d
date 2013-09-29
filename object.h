@@ -1,6 +1,7 @@
 #ifndef GS_OBJECT_H
 #define GS_OBJECT_H
 
+#include "sprite.h"
 #include "image.h"
 #include "vect2.h"
 
@@ -10,7 +11,7 @@ namespace gs
 class GsObject {
 public:
     GsObject(void);
-    GsObject(const GsImage& image);
+    GsObject(const GsSprite& sprite);
     GsObject(const GsObject& object);
     virtual ~GsObject(void);
 
@@ -22,20 +23,20 @@ public:
     virtual int getY(void) const;
     virtual const GsVect2i& getPosition(void) const;
 
-    virtual void setImage(const GsImage& image);
-    virtual const GsImage& getImage(void) const;
+    virtual void setSprite(const GsSprite& sprite);
+    virtual const GsSprite& getSprite(void) const;
 
     virtual void displayOn(GsImage& image);
 protected:
     GsVect2i position;
-    GsImage image;
+    GsSprite sprite;
 };
 
 class GsMovObject : public GsObject {
 public:
     GsMovObject(void);
-    GsMovObject(const GsImage& image);// : GsObject(image);
-    GsMovObject(const GsMovObject& object);// : GsObject(object);
+    GsMovObject(const GsSprite& sprite);
+    GsMovObject(const GsMovObject& object);
     virtual ~GsMovObject(void);
 
     virtual GsMovObject& operator=(const GsMovObject& object);

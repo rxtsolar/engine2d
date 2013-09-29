@@ -9,9 +9,9 @@ GsObject::GsObject(void)
 
 }
 
-GsObject::GsObject(const GsImage& image)
+GsObject::GsObject(const GsSprite& sprite)
 {
-    setImage(image);
+    setSprite(sprite);
 }
 
 GsObject::GsObject(const GsObject& object)
@@ -27,7 +27,7 @@ GsObject::~GsObject(void)
 GsObject& GsObject::operator=(const GsObject& object)
 {
     position = object.getPosition();
-    image = object.getImage();
+    sprite = object.getSprite();
     return *this;
 }
 
@@ -56,19 +56,20 @@ const GsVect2i& GsObject::getPosition(void) const
     return position;
 }
 
-void GsObject::setImage(const GsImage& image)
+void GsObject::setSprite(const GsSprite& sprite)
 {
-    this->image = image;
+    this->sprite = sprite;
 }
 
-const GsImage& GsObject::getImage(void) const
+const GsSprite& GsObject::getSprite(void) const
 {
-    return image;
+    return sprite;
 }
 
 void GsObject::displayOn(GsImage& image)
 {
-    image.applySurface(position.getX(), position.getY(), this->image);
+    sprite.update();
+    sprite.applySurface(position.getX(), position.getY(), image);
 }
 
 
@@ -78,7 +79,7 @@ GsMovObject::GsMovObject(void)
 
 }
 
-GsMovObject::GsMovObject(const GsImage& image) : GsObject(image)
+GsMovObject::GsMovObject(const GsSprite& sprite) : GsObject(sprite)
 {
 
 }
@@ -97,7 +98,7 @@ GsMovObject& GsMovObject::operator=(const GsMovObject& object)
 {
     position = object.getPosition();
     velocity = object.getVelocity();
-    image = object.getImage();
+    sprite = object.getSprite();
     return *this;
 }
 
