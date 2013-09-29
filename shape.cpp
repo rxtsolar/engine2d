@@ -150,6 +150,14 @@ bool GsRect::contains(const GsRect& r) const
 
 bool GsRect::conflictWith(const GsRect& r) const
 {
+    if (r.contains(point))
+        return true;
+    if (r.contains(point + GsVect2i(size.getX(), 0)))
+        return true;
+    if (r.contains(point + GsVect2i(0, size.getY())))
+        return true;
+    if (r.contains(point + size))
+        return true;
     if (contains(r.getPoint()))
         return true;
     if (contains(r.getPoint() + GsVect2i(r.getW(), 0)))

@@ -13,6 +13,7 @@ GsObject::GsObject(void)
 
 GsObject::GsObject(const GsSprite& sprite)
 {
+    collision = false;
     setSprite(sprite);
     setSize(sprite.getSize());
 }
@@ -29,6 +30,7 @@ GsObject::~GsObject(void)
 
 GsObject& GsObject::operator=(const GsObject& object)
 {
+    collision = object.isWithCollision();
     bound = object.getBound();
     sprite = object.getSprite();
     return *this;
@@ -115,6 +117,21 @@ void GsObject::displayOn(GsImage& image)
     sprite.applySpriteOn(image, bound.getX(), bound.getY());
 }
 
+void GsObject::enableCollision(void)
+{
+    collision = true;
+}
+
+void GsObject::disableCollision(void)
+{
+    collision = false;
+}
+
+bool GsObject::isWithCollision(void) const
+{
+    return collision;
+}
+
 bool GsObject::conflictWith(const GsObject& object) const
 {
     return bound.conflictWith(object.getBound());
@@ -183,9 +200,22 @@ const GsVect2d& GsMovObject::getVelocity(void) const
     return velocity;
 }
 
-void GsMovObject::update(void)
+void GsMovObject::update(const vector<GsMovObject*>& obstacles)
 {
-    bound.setPoint(bound.getPoint() + velocity);
+    GsRect newBound = bound;
+    vector<GsMovObject*>::const_iterator it;
+    newBound.setPoint(bound.getPoint() + velocity);
+    if (collision) {
+        for (it = obstacles.begin(); it != obstacles.end(); it++) {
+            if (*it == this)
+                continue;
+            if (!(*it)->isWithCollision())
+                continue;
+            if (newBound.conflictWith((*it)->getBound()))
+                return;
+        }
+    }
+    bound = newBound;
 }
 
 } // namespace gs

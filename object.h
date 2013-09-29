@@ -39,9 +39,14 @@ public:
 
     virtual void displayOn(GsImage& image);
 
+    virtual void enableCollision(void);
+    virtual void disableCollision(void);
+    virtual bool isWithCollision(void) const;
+
     virtual bool conflictWith(const GsObject& object) const;
     virtual bool conflictWith(const std::vector<GsObject*>& objects) const;
 protected:
+    bool collision;
     GsRect bound;
     GsSprite sprite;
 };
@@ -61,7 +66,7 @@ public:
     virtual double getVy(void) const;
     virtual const GsVect2d& getVelocity(void) const;
 
-    virtual void update(void);
+    virtual void update(const std::vector<GsMovObject*>& obstacles);
 protected:
     GsVect2d velocity;
 };

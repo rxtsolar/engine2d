@@ -73,6 +73,8 @@ bool GsEngine2D::init(void)
     sprite.setConfig(4, 2);
     objects.push_back(new GsMovObject(sprite));
     objects[2]->setPosition(400, 400);
+    objects[1]->enableCollision();
+    //objects[2]->enableCollision();
 
     focus = 1;
 
@@ -128,7 +130,7 @@ void GsEngine2D::update(void)
     else
         vx = 0;
     objects[focus]->setVelocity(vx, vy);
-    objects[focus]->update();
+    objects[focus]->update(objects);
     objects[1]->displayOn(*screen);
     objects[2]->displayOn(*screen);
 }
