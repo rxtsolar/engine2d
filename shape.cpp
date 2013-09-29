@@ -35,6 +35,17 @@ GsRect& GsRect::operator=(const GsRect& rect)
     return *this;
 }
 
+GsRect GsRect::operator+(const GsVect2i& vect)
+{
+    return GsRect(point + vect, size);
+}
+
+GsRect& GsRect::operator+=(const GsVect2i& vect)
+{
+    point += vect;
+    return *this;
+}
+
 void GsRect::setRect(int x, int y, int w, int h)
 {
     point = GsVect2i(x, y);
@@ -105,6 +116,11 @@ int GsRect::getW(void) const
 int GsRect::getH(void) const
 {
     return size.getY();
+}
+
+void GsRect::movePoint(const GsVect2i& vect)
+{
+    point += vect;
 }
 
 } // namespace gs

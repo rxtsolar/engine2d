@@ -16,6 +16,8 @@ public:
     virtual ~GsRect(void);
 
     virtual GsRect& operator=(const GsRect& rect);
+    virtual GsRect operator+(const GsVect2i& vect);
+    virtual GsRect& operator+=(const GsVect2i& vect);
 
     virtual void setRect(int x, int y, int w, int h);
     virtual void setRect(const GsVect2i& p, const GsVect2i& s);
@@ -32,6 +34,8 @@ public:
     virtual int getY(void) const;
     virtual int getW(void) const;
     virtual int getH(void) const;
+
+    virtual void movePoint(const GsVect2i& vect);
 protected:
     GsVect2i point;
     GsVect2i size;
