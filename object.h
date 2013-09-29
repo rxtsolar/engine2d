@@ -4,6 +4,7 @@
 #include "sprite.h"
 #include "image.h"
 #include "vect2.h"
+#include <vector>
 
 namespace gs
 {
@@ -23,12 +24,25 @@ public:
     virtual int getY(void) const;
     virtual const GsVect2i& getPosition(void) const;
 
+    virtual void setSize(int w, int h);
+    virtual void setSize(const GsVect2i& size);
+    virtual int getW(void) const;
+    virtual int getH(void) const;
+    virtual const GsVect2i& getSize(void) const;
+
+    virtual void setBound(int x, int y, int w, int h);
+    virtual void setBound(const GsRect& rect);
+    virtual const GsRect& getBound(void) const;
+
     virtual void setSprite(const GsSprite& sprite);
     virtual const GsSprite& getSprite(void) const;
 
     virtual void displayOn(GsImage& image);
+
+    virtual bool conflictWith(const GsObject& object) const;
+    virtual bool conflictWith(const std::vector<GsObject*>& objects) const;
 protected:
-    GsVect2i position;
+    GsRect bound;
     GsSprite sprite;
 };
 

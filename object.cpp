@@ -1,5 +1,7 @@
 #include "object.h"
 
+using namespace std;
+
 namespace gs
 {
 
@@ -12,6 +14,7 @@ GsObject::GsObject(void)
 GsObject::GsObject(const GsSprite& sprite)
 {
     setSprite(sprite);
+    setSize(sprite.getSize());
 }
 
 GsObject::GsObject(const GsObject& object)
@@ -26,34 +29,74 @@ GsObject::~GsObject(void)
 
 GsObject& GsObject::operator=(const GsObject& object)
 {
-    position = object.getPosition();
+    bound = object.getBound();
     sprite = object.getSprite();
     return *this;
 }
 
 void GsObject::setPosition(int x, int y)
 {
-    position = GsVect2i(x, y);
+    bound.setPoint(GsVect2i(x, y));
 }
 
 void GsObject::setPosition(const GsVect2i& pos)
 {
-    position = pos;
+    bound.setPoint(pos);
 }
 
 int GsObject::getX(void) const 
 {
-    return position.getX();
+    return bound.getX();
 }
 
 int GsObject::getY(void) const
 {
-    return position.getY();
+    return bound.getY();
 }
 
 const GsVect2i& GsObject::getPosition(void) const
 {
-    return position;
+    return bound.getPoint();
+}
+
+void GsObject::setSize(int w, int h)
+{
+    bound.setSize(GsVect2i(w, h));
+}
+
+void GsObject::setSize(const GsVect2i& size)
+{
+    bound.setSize(size);
+}
+
+int GsObject::getW(void) const
+{
+    return bound.getW();
+}
+
+int GsObject::getH(void) const
+{
+    return bound.getH();
+}
+
+const GsVect2i& GsObject::getSize(void) const
+{
+    return bound.getSize();
+}
+
+void GsObject::setBound(int x, int y, int w, int h)
+{
+    bound.setRect(x, y, w, h);
+}
+
+void GsObject::setBound(const GsRect& rect)
+{
+    bound = rect;
+}
+
+const GsRect& GsObject::getBound(void) const
+{
+    return bound;
 }
 
 void GsObject::setSprite(const GsSprite& sprite)
@@ -69,7 +112,21 @@ const GsSprite& GsObject::getSprite(void) const
 void GsObject::displayOn(GsImage& image)
 {
     sprite.update();
-    sprite.applySpriteOn(image, position.getX(), position.getY());
+    sprite.applySpriteOn(image, bound.getX(), bound.getY());
+}
+
+bool GsObject::conflictWith(const GsObject& object) const
+{
+    return bound.conflictWith(object.getBound());
+}
+
+bool GsObject::conflictWith(const vector<GsObject*>& objects) const
+{
+    vector<GsObject*>::const_iterator it;
+    for (it = objects.begin(); it != objects.end(); it++)
+        if (bound.conflictWith((*it)->getBound()))
+            return true;
+    return false;
 }
 
 
@@ -96,8 +153,7 @@ GsMovObject::~GsMovObject(void)
 
 GsMovObject& GsMovObject::operator=(const GsMovObject& object)
 {
-    position = object.getPosition();
-    velocity = object.getVelocity();
+    bound = object.getBound();
     sprite = object.getSprite();
     return *this;
 }
@@ -129,7 +185,7 @@ const GsVect2d& GsMovObject::getVelocity(void) const
 
 void GsMovObject::update(void)
 {
-    position += velocity;
+    bound.setPoint(bound.getPoint() + velocity);
 }
 
 } // namespace gs
