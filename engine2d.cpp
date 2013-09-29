@@ -72,6 +72,7 @@ bool GsEngine2D::init(void)
     sprite.setImage(image);
     sprite.setConfig(4, 2);
     objects.push_back(new GsMovObject(sprite));
+    objects[2]->setPosition(400, 400);
 
     focus = 1;
 
@@ -115,15 +116,15 @@ void GsEngine2D::update(void)
     objects[0]->displayOn(*screen);
 
     if (keyStates[SDLK_UP])
-        vy = -2;
+        vy = -4;
     else if (keyStates[SDLK_DOWN])
-        vy = 2;
+        vy = 4;
     else
         vy = 0;
     if (keyStates[SDLK_LEFT])
-        vx = -2;
+        vx = -4;
     else if (keyStates[SDLK_RIGHT])
-        vx = 2;
+        vx = 4;
     else
         vx = 0;
     objects[focus]->setVelocity(vx, vy);
