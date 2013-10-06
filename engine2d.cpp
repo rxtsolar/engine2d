@@ -75,8 +75,10 @@ bool GsEngine2D::init(void)
     objects[2]->setPosition(400, 400);
     objects[1]->enableCollision();
     objects[2]->enableCollision();
-    objects[1]->setCapVelocity(4);
-    objects[2]->setCapVelocity(8);
+    //objects[1]->setCapVelocity(4);
+    //objects[2]->setCapVelocity(8);
+    objects[1]->setDecelRate(0.3, 0.3);
+    objects[2]->setDecelRate(0.1, 0.1);
 
     focus = 1;
 
@@ -114,30 +116,24 @@ void GsEngine2D::update(void)
     Uint8* keyStates = SDL_GetKeyState(0);
     double ax = 0;
     double ay = 0;
-    int stop = 0;
 
     screen->fillRoiWith(0xff, 0xff, 0xff);
     objects[0]->setPosition(0, 0);
     objects[0]->displayOn(*screen);
 
     if (keyStates[SDLK_UP])
-        ay = -0.2;
+        ay = -2;
     else if (keyStates[SDLK_DOWN])
-        ay = 0.2;
+        ay = 2;
     else
-        stop |= 1;
+        ay = 0;
     if (keyStates[SDLK_LEFT])
-        ax = -0.2;
+        ax = -2;
     else if (keyStates[SDLK_RIGHT])
-        ax = 0.2;
+        ax = 2;
     else
-        stop |= 2;
-    if (stop == 3) {
-        objects[focus]->setVelocity(0, 0);
-        objects[focus]->setAcceleration(0, 0);
-    } else {
-        objects[focus]->setAcceleration(ax, ay);
-    }
+        ax = 0;
+    objects[focus]->setAcceleration(ax, ay);
     objects[focus]->update(objects);
     objects[1]->displayOn(*screen);
     objects[2]->displayOn(*screen);

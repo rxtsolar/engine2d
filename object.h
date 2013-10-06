@@ -90,10 +90,15 @@ public:
     virtual double getAy(void) const;
     virtual const GsVect2d& getAcceleration(void) const;
 
+    virtual void setDecelRate(double dx, double dy);
+    virtual void setDecelRate(const GsVect2d& decel);
+    virtual const GsVect2d& getDecelRate(void) const;
+
     virtual void update(const std::vector<GsAccObject*>& obstacles);
 protected:
     GsVect2d capVelocity;
     GsVect2d acceleration;
+    GsVect2d decelRate;
 };
 
 } // namespace gs

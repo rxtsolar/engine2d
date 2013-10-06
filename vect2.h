@@ -120,6 +120,16 @@ public:
         return *this = *this / fact;
     }
 
+    GsVect2<T>& operator*=(const GsVect2<T>& vect)
+    {
+        return *this = *this * vect;
+    }
+
+    GsVect2<T>& operator/=(const GsVect2<T>& vect)
+    {
+        return *this = *this / vect;
+    }
+
     bool operator==(const GsVect2<T>& vect) const
     {
         return fabs(x - vect.getX()) < GS_EPSILON &&
