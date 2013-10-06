@@ -78,7 +78,7 @@ bool GsEngine2D::init(void)
     //objects[1]->setCapVelocity(4);
     //objects[2]->setCapVelocity(8);
     objects[1]->setDecelRate(0.3, 0.3);
-    objects[2]->setDecelRate(0.1, 0.1);
+    objects[2]->setDecelRate(1.0, 1.0);
 
     focus = 1;
 
@@ -122,19 +122,20 @@ void GsEngine2D::update(void)
     objects[0]->displayOn(*screen);
 
     if (keyStates[SDLK_UP])
-        ay = -2;
+        ay = -4;
     else if (keyStates[SDLK_DOWN])
-        ay = 2;
+        ay = 4;
     else
         ay = 0;
     if (keyStates[SDLK_LEFT])
-        ax = -2;
+        ax = -4;
     else if (keyStates[SDLK_RIGHT])
-        ax = 2;
+        ax = 4;
     else
         ax = 0;
     objects[focus]->setAcceleration(ax, ay);
-    objects[focus]->update(objects);
+    objects[1]->update(objects);
+    objects[2]->update(objects);
     objects[1]->displayOn(*screen);
     objects[2]->displayOn(*screen);
 }

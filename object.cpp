@@ -313,8 +313,8 @@ void GsAccObject::update(const vector<GsAccObject*>& obstacles)
 {
     GsRect newBound = bound;
     vector<GsAccObject*>::const_iterator it;
-    velocity += acceleration;
     velocity *= GsVect2d(1.0, 1.0) - decelRate;
+    velocity += acceleration;
     if (capVelocity != GsVect2d(0, 0))
         velocity = min(abs(velocity), capVelocity) * sign(velocity);
     newBound.setPoint(bound.getPoint() + velocity);
