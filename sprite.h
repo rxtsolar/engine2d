@@ -3,6 +3,7 @@
 
 #include "image.h"
 #include "shape.h"
+#include "timer.h"
 
 namespace gs
 {
@@ -23,6 +24,12 @@ public:
     virtual void setSize(const GsVect2i& size);
     virtual const GsVect2i& getSize(void) const;
 
+    virtual void setTimer(const GsTimer& timer);
+    virtual const GsTimer& getTimer(void) const;
+
+    virtual void setFps(int fps);
+    virtual int getFps(void) const;
+
     virtual void setStatus(int i);
     virtual int getStatus(void) const;
 
@@ -42,6 +49,8 @@ public:
 protected:
     GsImage image;
     GsVect2i size;
+    GsTimer timer;
+    int fps;
     int status;
     int frames;
     int slots;

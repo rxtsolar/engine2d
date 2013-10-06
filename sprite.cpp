@@ -1,4 +1,5 @@
 #include "sprite.h"
+#include "const.h"
 #include "debug.h"
 
 namespace gs
@@ -6,6 +7,7 @@ namespace gs
 
 GsSprite::GsSprite(void)
 {
+    fps = GS_DEF_ANM_FPS;
     status = 0;
     frames = 0;
     slots = 0;
@@ -25,6 +27,8 @@ GsSprite& GsSprite::operator=(const GsSprite& sprite)
 {
     image = sprite.getImage();
     size = sprite.getSize();
+    timer = sprite.getTimer();
+    fps = sprite.getFps();
     status = sprite.getStatus();
     frames = sprite.getFrames();
     slots = sprite.getSlots();
@@ -49,6 +53,26 @@ void GsSprite::setImage(const GsImage& image)
 const GsImage& GsSprite::getImage(void) const
 {
     return image;
+}
+
+void GsSprite::setTimer(const GsTimer& timer)
+{
+    this->timer = timer;
+}
+
+const GsTimer& GsSprite::getTimer(void) const
+{
+    return timer;
+}
+
+void GsSprite::setFps(int fps)
+{
+    this->fps = fps;
+}
+
+int GsSprite::getFps(void) const
+{
+    return fps;
 }
 
 void GsSprite::setSize(int w, int h)
@@ -134,6 +158,9 @@ void GsSprite::update(void)
         return;
     if (!slots)
         gsBug("slots is zero");
+    if (timer.isStarted() && timer.getTicks() < 1000 / fps)
+        return;
+    timer.start();
     status = (status + 1) % frames;
     offsetX = GsVect2i(size.getX(), 0) * (status % slots);
     offsetY = GsVect2i(0, size.getY()) * (status / slots);

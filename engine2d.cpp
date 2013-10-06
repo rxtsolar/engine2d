@@ -45,7 +45,7 @@ bool GsEngine2D::init(void)
     srand(time(0));
     screenWidth = 1280;
     screenHeight = 720;
-    fps = 30;
+    fps = GS_DEF_FPS;
     running = false;
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
         return false;
@@ -74,7 +74,7 @@ bool GsEngine2D::init(void)
     objects.push_back(new GsMovObject(sprite));
     objects[2]->setPosition(400, 400);
     objects[1]->enableCollision();
-    //objects[2]->enableCollision();
+    objects[2]->enableCollision();
 
     focus = 1;
 

@@ -12,6 +12,8 @@ namespace gs
 const int GS_DEF_WIDTH = 1280;
 const int GS_DEF_HEIGHT = 720;
 const int GS_DEF_BPP = 32;
+const int GS_DEF_FPS = 30;
+const int GS_DEF_ANM_FPS = 2;
 
 const double GS_PI = 4.0 * atan(1.0);
 const double GS_EPSILON = FLT_EPSILON;
