@@ -224,12 +224,12 @@ void GsMovObject::update(const vector<GsMovObject*>& obstacles)
 // class GsAccObject
 GsAccObject::GsAccObject(void) : GsMovObject()
 {
-
+    capVelocity = 0;
 }
 
 GsAccObject::GsAccObject(const GsSprite& sprite) : GsMovObject(sprite)
 {
-
+    capVelocity = 0;
 }
 
 GsAccObject::GsAccObject(const GsAccObject& object)
@@ -248,8 +248,24 @@ GsAccObject& GsAccObject::operator=(const GsAccObject& object)
     bound = object.getBound();
     sprite = object.getSprite();
     velocity = object.getVelocity();
+    capVelocity = object.getCapVelocity();
     acceleration = object.getAcceleration();
     return *this;
+}
+
+void GsAccObject::setCapVelocity(double cap)
+{
+    capVelocity = GsVect2d(cap, cap);
+}
+
+void GsAccObject::setCapVelocity(const GsVect2d& cap)
+{
+    capVelocity = cap;
+}
+
+const GsVect2d& GsAccObject::getCapVelocity(void) const
+{
+    return capVelocity;
 }
 
 void GsAccObject::setAcceleration(double ax, double ay)
@@ -282,6 +298,7 @@ void GsAccObject::update(const vector<GsAccObject*>& obstacles)
     GsRect newBound = bound;
     vector<GsAccObject*>::const_iterator it;
     velocity += acceleration;
+    velocity = min(abs(velocity), capVelocity) * sign(velocity);
     newBound.setPoint(bound.getPoint() + velocity);
     if (collision) {
         for (it = obstacles.begin(); it != obstacles.end(); it++) {

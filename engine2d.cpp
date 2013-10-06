@@ -75,6 +75,8 @@ bool GsEngine2D::init(void)
     objects[2]->setPosition(400, 400);
     objects[1]->enableCollision();
     objects[2]->enableCollision();
+    objects[1]->setCapVelocity(4);
+    objects[2]->setCapVelocity(8);
 
     focus = 1;
 

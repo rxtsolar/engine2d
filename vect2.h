@@ -186,6 +186,18 @@ public:
         return GsVect2<T>(x, y);
     }
 
+    friend GsVect2<int> sign(const GsVect2<T>& vect)
+    {
+        int x = vect.getX() < 0 ? -1 : 1;
+        int y = vect.getY() < 0 ? -1 : 1;
+        return GsVect2<int>(x, y);
+    }
+
+    friend GsVect2<T> abs(const GsVect2<T>& vect)
+    {
+        return GsVect2<T>(fabs(vect.x), fabs(vect.y));
+    }
+
     // theta is supposed to be degree
     GsVect2<T> rotate(double theta) const
     {

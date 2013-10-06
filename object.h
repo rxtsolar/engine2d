@@ -80,6 +80,10 @@ public:
 
     virtual GsAccObject& operator=(const GsAccObject& object);
 
+    virtual void setCapVelocity(double cap);
+    virtual void setCapVelocity(const GsVect2d& cap);
+    virtual const GsVect2d& getCapVelocity(void) const;
+
     virtual void setAcceleration(double ax, double ay);
     virtual void setAcceleration(const GsVect2d& accel);
     virtual double getAx(void) const;
@@ -88,6 +92,7 @@ public:
 
     virtual void update(const std::vector<GsAccObject*>& obstacles);
 protected:
+    GsVect2d capVelocity;
     GsVect2d acceleration;
 };
 
