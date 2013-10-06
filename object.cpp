@@ -249,7 +249,7 @@ GsAccObject& GsAccObject::operator=(const GsAccObject& object)
     sprite = object.getSprite();
     velocity = object.getVelocity();
     capVelocity = object.getCapVelocity();
-    acceleration = object.getAcceleration();
+    accelerations = object.getAccelerations();
     decelRate = object.getDecelRate();
     return *this;
 }
@@ -269,29 +269,44 @@ const GsVect2d& GsAccObject::getCapVelocity(void) const
     return capVelocity;
 }
 
-void GsAccObject::setAcceleration(double ax, double ay)
+void GsAccObject::setAccelerations(const vector<GsVect2d>& accels)
 {
-    acceleration = GsVect2d(ax, ay);
+    accelerations = accels;
 }
 
-void GsAccObject::setAcceleration(const GsVect2d& accel)
+const vector<GsVect2d>& GsAccObject::getAccelerations(void) const
 {
-    acceleration = accel;
+    return accelerations;
 }
 
-double GsAccObject::getAx(void) const
+void GsAccObject::pushAcceleration(const GsVect2d& accel)
 {
-    return acceleration.getX();
+    accelerations.push_back(accel);
 }
 
-double GsAccObject::getAy(void) const
+void GsAccObject::setAcceleration(int i, double ax, double ay)
 {
-    return acceleration.getY();
+    accelerations[i] = GsVect2d(ax, ay);
 }
 
-const GsVect2d& GsAccObject::getAcceleration(void) const
+void GsAccObject::setAcceleration(int i, const GsVect2d& accel)
 {
-    return acceleration;
+    accelerations[i] = accel;
+}
+
+double GsAccObject::getAx(int i) const
+{
+    return accelerations[i].getX();
+}
+
+double GsAccObject::getAy(int i) const
+{
+    return accelerations[i].getY();
+}
+
+const GsVect2d& GsAccObject::getAcceleration(int i) const
+{
+    return accelerations[i];
 }
 
 void GsAccObject::setDecelRate(double dx, double dy)
@@ -313,8 +328,10 @@ void GsAccObject::update(const vector<GsAccObject*>& obstacles)
 {
     GsRect newBound = bound;
     vector<GsAccObject*>::const_iterator it;
+    vector<GsVect2d>::const_iterator ac;
     velocity *= GsVect2d(1.0, 1.0) - decelRate;
-    velocity += acceleration;
+    for (ac = accelerations.begin(); ac != accelerations.end(); ac++)
+        velocity += *ac;
     if (capVelocity != GsVect2d(0, 0))
         velocity = min(abs(velocity), capVelocity) * sign(velocity);
     newBound.setPoint(bound.getPoint() + velocity);
@@ -324,8 +341,10 @@ void GsAccObject::update(const vector<GsAccObject*>& obstacles)
                 continue;
             if (!(*it)->isWithCollision())
                 continue;
-            if (newBound.conflictWith((*it)->getBound()))
+            if (newBound.conflictWith((*it)->getBound())) {
+                velocity = GsVect2d(0, 0);
                 return;
+            }
         }
     }
     bound = newBound;

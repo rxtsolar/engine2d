@@ -84,11 +84,15 @@ public:
     virtual void setCapVelocity(const GsVect2d& cap);
     virtual const GsVect2d& getCapVelocity(void) const;
 
-    virtual void setAcceleration(double ax, double ay);
-    virtual void setAcceleration(const GsVect2d& accel);
-    virtual double getAx(void) const;
-    virtual double getAy(void) const;
-    virtual const GsVect2d& getAcceleration(void) const;
+    virtual void setAccelerations(const std::vector<GsVect2d>& accels);
+    virtual const std::vector<GsVect2d>& getAccelerations(void) const;
+    virtual void pushAcceleration(const GsVect2d& accel);
+
+    virtual void setAcceleration(int i, double ax, double ay);
+    virtual void setAcceleration(int i, const GsVect2d& accel);
+    virtual double getAx(int i) const;
+    virtual double getAy(int i) const;
+    virtual const GsVect2d& getAcceleration(int i) const;
 
     virtual void setDecelRate(double dx, double dy);
     virtual void setDecelRate(const GsVect2d& decel);
@@ -97,7 +101,7 @@ public:
     virtual void update(const std::vector<GsAccObject*>& obstacles);
 protected:
     GsVect2d capVelocity;
-    GsVect2d acceleration;
+    std::vector<GsVect2d> accelerations;
     GsVect2d decelRate;
 };
 

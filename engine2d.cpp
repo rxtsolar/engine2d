@@ -72,11 +72,15 @@ bool GsEngine2D::init(void)
     sprite.setImage(image);
     sprite.setConfig(4, 2);
     objects.push_back(new GsAccObject(sprite));
+    objects[1]->setPosition(410, 200);
     objects[2]->setPosition(400, 400);
     objects[1]->enableCollision();
     objects[2]->enableCollision();
     //objects[1]->setCapVelocity(4);
     //objects[2]->setCapVelocity(8);
+    objects[1]->pushAcceleration(GsVect2d(0, 0));
+    objects[1]->pushAcceleration(GsVect2d(0, 3));
+    objects[2]->pushAcceleration(GsVect2d(0, 0));
     objects[1]->setDecelRate(0.3, 0.3);
     objects[2]->setDecelRate(1.0, 1.0);
 
@@ -99,8 +103,10 @@ void GsEngine2D::handle(void)
         if (event.type == SDL_QUIT)
             running = false;
         if (event.type == SDL_KEYDOWN) {
-            if (event.key.keysym.sym == SDLK_j)
+            if (event.key.keysym.sym == SDLK_j) {
+                objects[1]->setVelocity(0, -40);
                 sound.play();
+            }
             if (event.key.keysym.sym == SDLK_m)
                 music.play();
             if (event.key.keysym.sym == SDLK_p)
@@ -133,7 +139,7 @@ void GsEngine2D::update(void)
         ax = 4;
     else
         ax = 0;
-    objects[focus]->setAcceleration(ax, ay);
+    objects[focus]->setAcceleration(0, ax, ay);
     objects[1]->update(objects);
     objects[2]->update(objects);
     objects[1]->displayOn(*screen);
