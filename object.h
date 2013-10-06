@@ -71,6 +71,26 @@ protected:
     GsVect2d velocity;
 };
 
+class GsAccObject : public GsMovObject {
+public:
+    GsAccObject(void);
+    GsAccObject(const GsSprite& sprite);
+    GsAccObject(const GsAccObject& object);
+    virtual ~GsAccObject(void);
+
+    virtual GsAccObject& operator=(const GsAccObject& object);
+
+    virtual void setAcceleration(double ax, double ay);
+    virtual void setAcceleration(const GsVect2d& accel);
+    virtual double getAx(void) const;
+    virtual double getAy(void) const;
+    virtual const GsVect2d& getAcceleration(void) const;
+
+    virtual void update(const std::vector<GsAccObject*>& obstacles);
+protected:
+    GsVect2d acceleration;
+};
+
 } // namespace gs
 
 #endif // GS_OBJECT_H

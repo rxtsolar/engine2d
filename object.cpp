@@ -8,7 +8,7 @@ namespace gs
 // class GsObject
 GsObject::GsObject(void)
 {
-
+    collision = false;
 }
 
 GsObject::GsObject(const GsSprite& sprite)
@@ -148,7 +148,7 @@ bool GsObject::conflictWith(const vector<GsObject*>& objects) const
 
 
 // class GsMovObject
-GsMovObject::GsMovObject(void)
+GsMovObject::GsMovObject(void) : GsObject()
 {
 
 }
@@ -170,8 +170,10 @@ GsMovObject::~GsMovObject(void)
 
 GsMovObject& GsMovObject::operator=(const GsMovObject& object)
 {
+    collision = object.isWithCollision();
     bound = object.getBound();
     sprite = object.getSprite();
+    velocity = object.getVelocity();
     return *this;
 }
 
@@ -204,6 +206,82 @@ void GsMovObject::update(const vector<GsMovObject*>& obstacles)
 {
     GsRect newBound = bound;
     vector<GsMovObject*>::const_iterator it;
+    newBound.setPoint(bound.getPoint() + velocity);
+    if (collision) {
+        for (it = obstacles.begin(); it != obstacles.end(); it++) {
+            if (*it == this)
+                continue;
+            if (!(*it)->isWithCollision())
+                continue;
+            if (newBound.conflictWith((*it)->getBound()))
+                return;
+        }
+    }
+    bound = newBound;
+}
+
+
+// class GsAccObject
+GsAccObject::GsAccObject(void) : GsMovObject()
+{
+
+}
+
+GsAccObject::GsAccObject(const GsSprite& sprite) : GsMovObject(sprite)
+{
+
+}
+
+GsAccObject::GsAccObject(const GsAccObject& object)
+{
+    *this = object;
+}
+
+GsAccObject::~GsAccObject(void)
+{
+
+}
+
+GsAccObject& GsAccObject::operator=(const GsAccObject& object)
+{
+    collision = object.isWithCollision();
+    bound = object.getBound();
+    sprite = object.getSprite();
+    velocity = object.getVelocity();
+    acceleration = object.getAcceleration();
+    return *this;
+}
+
+void GsAccObject::setAcceleration(double ax, double ay)
+{
+    acceleration = GsVect2d(ax, ay);
+}
+
+void GsAccObject::setAcceleration(const GsVect2d& accel)
+{
+    acceleration = accel;
+}
+
+double GsAccObject::getAx(void) const
+{
+    return acceleration.getX();
+}
+
+double GsAccObject::getAy(void) const
+{
+    return acceleration.getY();
+}
+
+const GsVect2d& GsAccObject::getAcceleration(void) const
+{
+    return acceleration;
+}
+
+void GsAccObject::update(const vector<GsAccObject*>& obstacles)
+{
+    GsRect newBound = bound;
+    vector<GsAccObject*>::const_iterator it;
+    velocity += acceleration;
     newBound.setPoint(bound.getPoint() + velocity);
     if (collision) {
         for (it = obstacles.begin(); it != obstacles.end(); it++) {

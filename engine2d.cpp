@@ -58,20 +58,20 @@ bool GsEngine2D::init(void)
 
     image = GsImage("background.jpg");
     sprite.setImage(image);
-    objects.push_back(new GsMovObject(sprite));
+    objects.push_back(new GsAccObject(sprite));
 
     image = GsImage("foo.jpg");
     image.setColorKey(GsColor(0, 0xff, 0xff));
     image.enableColorKey();
     sprite.setImage(image);
-    objects.push_back(new GsMovObject(sprite));
+    objects.push_back(new GsAccObject(sprite));
 
     image = GsImage("sheet.jpg");
     image.setColorKey(GsColor(0, 0xff, 0xff));
     image.enableColorKey();
     sprite.setImage(image);
     sprite.setConfig(4, 2);
-    objects.push_back(new GsMovObject(sprite));
+    objects.push_back(new GsAccObject(sprite));
     objects[2]->setPosition(400, 400);
     objects[1]->enableCollision();
     objects[2]->enableCollision();
@@ -110,26 +110,32 @@ void GsEngine2D::handle(void)
 void GsEngine2D::update(void)
 {
     Uint8* keyStates = SDL_GetKeyState(0);
-    double vx;
-    double vy;
+    double ax = 0;
+    double ay = 0;
+    int stop = 0;
 
     screen->fillRoiWith(0xff, 0xff, 0xff);
     objects[0]->setPosition(0, 0);
     objects[0]->displayOn(*screen);
 
     if (keyStates[SDLK_UP])
-        vy = -4;
+        ay = -0.2;
     else if (keyStates[SDLK_DOWN])
-        vy = 4;
+        ay = 0.2;
     else
-        vy = 0;
+        stop |= 1;
     if (keyStates[SDLK_LEFT])
-        vx = -4;
+        ax = -0.2;
     else if (keyStates[SDLK_RIGHT])
-        vx = 4;
+        ax = 0.2;
     else
-        vx = 0;
-    objects[focus]->setVelocity(vx, vy);
+        stop |= 2;
+    if (stop == 3) {
+        objects[focus]->setVelocity(0, 0);
+        objects[focus]->setAcceleration(0, 0);
+    } else {
+        objects[focus]->setAcceleration(ax, ay);
+    }
     objects[focus]->update(objects);
     objects[1]->displayOn(*screen);
     objects[2]->displayOn(*screen);
