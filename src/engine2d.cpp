@@ -56,17 +56,17 @@ bool GsEngine2D::init(void)
     screen->setRoi(screenWidth/4, screenHeight/4,
                    screenWidth/2, screenHeight/2);
 
-    image = GsImage("background.jpg");
+    image = GsImage("resource/background.jpg");
     sprite.setImage(image);
     objects.push_back(new GsAccObject(sprite));
 
-    image = GsImage("foo.jpg");
+    image = GsImage("resource/foo.jpg");
     image.setColorKey(GsColor(0, 0xff, 0xff));
     image.enableColorKey();
     sprite.setImage(image);
     objects.push_back(new GsAccObject(sprite));
 
-    image = GsImage("sheet.jpg");
+    image = GsImage("resource/sheet.jpg");
     image.setColorKey(GsColor(0, 0xff, 0xff));
     image.enableColorKey();
     sprite.setImage(image);
@@ -86,9 +86,9 @@ bool GsEngine2D::init(void)
 
     focus = 1;
 
-    sound.loadSound("jump.wav");
+    sound.loadSound("resource/jump.wav");
 
-    music.loadMusic("tristram.mp3");
+    music.loadMusic("resource/tristram.mp3");
 
     SDL_WM_SetCaption("My Game", 0);
     SDL_ShowCursor(0);

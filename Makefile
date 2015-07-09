@@ -1,21 +1,48 @@
-CC = g++
-CFLAGS = -g -Wall
-LIBS = -lSDL -lSDL_image -lSDL_mixer
+CC          = g++
+CFLAGS      = -g -Wall
+LIBS        = -lSDL -lSDL_image -lSDL_mixer
 
-headers = engine2d.h image.h color.h shape.h sound.h timer.h \
-          object.h sprite.h debug.h vect2.h const.h
-objects = engine2d.o image.o color.o shape.o sound.o timer.o \
-          object.o sprite.o main.o
+INCLUDES    = include
+BINS        = bin
+OBJS        = obj
+SRCS        = src
+RESOURCES   = resource
 
-%.o : %.cpp
-	$(CC) $(CFLAGS) -c $<
+headers     = ../$(INCLUDES)/engine2d.h \
+              ../$(INCLUDES)/engimage.h \
+              ../$(INCLUDES)/engcolor.h \
+              ../$(INCLUDES)/shape.h    \
+              ../$(INCLUDES)/sound.h    \
+              ../$(INCLUDES)/timer.h    \
+              ../$(INCLUDES)/object.h   \
+              ../$(INCLUDES)/sprite.h   \
+              ../$(INCLUDES)/debug.h    \
+              ../$(INCLUDES)/vect2.h    \
+              ../$(INCLUDES)/const.h
+
+objects     = $(OBJS)/engine2d.o    \
+              $(OBJS)/image.o       \
+              $(OBJS)/color.o       \
+              $(OBJS)/shape.o       \
+              $(OBJS)/sound.o       \
+              $(OBJS)/timer.o       \
+              $(OBJS)/object.o      \
+              $(OBJS)/sprite.o      \
+              $(OBJS)/main.o
+
+$(OBJS)/%.o : $(SRCS)/%.cpp
+	$(CC) $(CFLAGS) -I$(INCLUDES) -c -o $@ $<
 
 all: game
+	ln -s bin/a.out play
 
 game: $(objects)
-	$(CC) $(CFLAGS) -o a.out $(objects) $(LIBS)
+	$(CC) $(CFLAGS) -o $(BINS)/a.out $(objects) $(LIBS)
 
-$(objects) : $(headers)
+#$(objects) : $(headers)
 
 clean:
-	rm a.out *.o
+	rm $(BINS)/* $(OBJS)/* play
+
+.PHONY:
+	clean
